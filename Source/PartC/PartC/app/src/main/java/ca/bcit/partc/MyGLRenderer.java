@@ -68,6 +68,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         if (Utilities.NEON)
         {
             mmult(mProjectionMatrix, mViewMatrix);
+
         }
         else
         {

@@ -7,5 +7,5 @@ package ca.bcit.partc;
 public class Utilities
 {
 
-    public static boolean NEON = true;
+    public static boolean NEON = false;
 }
