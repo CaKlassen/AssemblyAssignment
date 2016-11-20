@@ -1,4 +1,0 @@
-#Sun Nov 20 12:59:46 PST 2016
-base.0=A\:\\AssemblyAssignment\\Source\\PartC\\hello-neon\\app\\build\\intermediates\\transforms\\dex\\arm7\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=A\:\\AssemblyAssignment\\Source\\PartC\\hello-neon\\app\\build\\intermediates\\transforms\\dex\\arm7\\debug\\folders\\1000\\1f\\main\\classes.dex
