@@ -61,9 +61,9 @@ void convertToGrayscaleNEON_asm(uint8_t * __restrict dest, uint8_t * __restrict 
      */
     __asm__ volatile("lsr %2, %2, #3 \n"    // divide numPixels by 2^3=8 using bitwise shift
 					 // Load the weights into r4-r6
-					 "mov r4, #77 \n"
+					 "mov r4, #28 \n"
 					 "mov r5, #151 \n"
-					 "mov r6, #28 \n"
+					 "mov r6, #77 \n"
 					 // Duplicate the constants into d4-d6
 					 "vdup.8 d4, r4 \n"
 					 "vdup.8 d5, r5 \n"
@@ -73,10 +73,10 @@ void convertToGrayscaleNEON_asm(uint8_t * __restrict dest, uint8_t * __restrict 
 					 // Load 8 pixels
 					 "vld4.8 {d0-d3}, [r1]! \n"
 					 // Perform the weighted average
-					 "vmull.u8 q3, d0, d4 \n"
-					 "vmlal.u8 q3, d1, d5 \n"
-					 "vmlal.u8 q3, d2, d6 \n"
-					 "vshrn.u16 d7, q3, #8 \n"
+					 "vmull.u8 q7, d0, d4 \n"
+					 "vmlal.u8 q7, d1, d5 \n"
+					 "vmlal.u8 q7, d2, d6 \n"
+					 "vshrn.u16 d7, q7, #8 \n"
 					 // Store the result in dest
 					 "vst1.8 {d7}, [r0]! \n"
 					 // Subtract from numPixels
@@ -85,7 +85,7 @@ void convertToGrayscaleNEON_asm(uint8_t * __restrict dest, uint8_t * __restrict 
 					 "bne 1b \n"
                      :
                      : "r"(dest), "r"(src), "r"(numPixels)
-                     : "r4", "r5", "r6", "d4", "d5", "d6", "d0", "d1", "d2", "d3", "q3", "d7"
+                     : "r4", "r5", "r6", "d4", "d5", "d6", "d0", "d1", "d2", "d3", "q7", "d7"
                      );
 }
 

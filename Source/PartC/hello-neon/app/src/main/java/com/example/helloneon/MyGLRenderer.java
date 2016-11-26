@@ -23,6 +23,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import static java.lang.System.nanoTime;
+
 /**
  * Provides drawing instructions for a GLSurfaceView object. This class
  * must override the OpenGL ES drawing lifecycle methods:
@@ -41,7 +43,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
-    private final float[] mRotationMatrix = new float[16];
 
     private float mAngle;
 
@@ -55,9 +56,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
 
     @Override
-    public void onDrawFrame(GL10 unused) {
-        float[] scratch = new float[16];
-
+    public void onDrawFrame(GL10 unused)
+    {
         // Draw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
@@ -67,11 +67,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Calculate the projection and view transformation
         if (Utilities.NEON)
         {
+            long time = System.nanoTime();
             mMVPMatrix = mmult(mProjectionMatrix, mViewMatrix);
+            time = System.nanoTime() - time;
+
+            Log.d(TAG, "Neon time: " + time);
         }
         else
         {
+            long time = System.nanoTime();
             Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+            time = System.nanoTime() - time;
+
+            Log.d(TAG, "Regular time: " + time);
         }
 
         // Draw square
